@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lan="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Greeting Clock</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <div id="wrapper">
+        <body>
+            <div class="box">
+                <h1 id="greeting"> good morning </h1>
+                <h2 id="date"></h2>
+                <h2 id="time"> 05:49:05 PM</h2>
+            </div>
+
+        </body>
+    </div>
+
+    <style>
+         @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+
+        *{
+        box-sizing: border-box; 
+        margin: 0;
+        padding: 0;
+        font-size: 100%;
+        color:black;
+        font-family: 'Courier Prime', 'Times New Roman';
+        }
+
+        #wrapper{
+            position: relative;
+            overflow: hidden;
+        }
+
+        .box{
+            margin-left: 50px;
+            margin-top: 50px;
+            border: 6px double black;
+            width: 450px;
+            
+            height:200px;
+        }
+
+        #greeting{
+            display: flex;
+            font-family: "Himalaya";
+            font-size: 50px;
+            text-align: center;
+            justify-content: center;
+            position: absolute;
+            width: 450px;
+            letter-spacing: 2px;
+            margin: auto;
+        }
+
+        #date{
+            width: 450px;
+            font-size: 18px;
+            margin: auto;
+            letter-spacing: 2px;
+            text-align: center;
+            justify-content: center;
+            position: absolute;
+            padding-top: 110px;
+
+        }
+
+        #time{
+            width: 450px; 
+            text-align: center;
+            justify-content: center;
+            position: absolute;
+            margin: auto;
+            padding-top: 150px;
+            letter-spacing: 2px;
+
+        }
+    </style>
+
+    <script>
+
+        function dateTime() {
+            let today = new Date();
+
+        /*** TIME ***/ 
+            let hour = today.getHours();
+            let min = today.getMinutes();
+            let sec = today.getSeconds();
+            let ap; 
+
+            if (hour < 12){
+                ap = "<span>AM</span>";
+            }
+            else{
+                ap = "<span>PM</span>";
+            }
+
+            //changing the greeting
+            if(hour < 12)
+                document.getElementById("greeting").innerHTML = "good morning";
+            else if(hour > 12 && hour < 18)
+                document.getElementById("greeting").innerHTML = "good afternoon";
+            else    
+                document.getElementById("greeting").innerHTML = "good evening";
+
+
+            //standard time conversion 
+            if(hour == 0){
+                hour = 12; 
+            }
+            
+            if(hour > 12){
+                hour-= 12;
+            }
+
+         
+            //add a zero in front of numbers < 10
+            hour = checkZero(hour);
+            min = checkZero(min);
+            sec = checkZero(sec);
+
+            document.getElementById("time").innerHTML = hour + ":" + min + ":" + sec + " " + ap;
+            
+        /*** DATE ***/ 
+            let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+            let weekDay = days[today.getDay()];
+            let day = today.getDate();
+            let month = months[today.getMonth()];
+            let year = today.getFullYear();
+            let date = weekDay + ", " + day + " " + month + " " + year;
+            document.getElementById("date").innerHTML = date;
+            
+            let time = setTimeout(function(){ dateTime() }, 500);
+        }
+
+        function checkZero(i) {
+            if (i < 10) {
+                i = "0" + i;
+            }
+            return i;
+        }
+
+        dateTime();
+
+    </script>
+</html>
