@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title> Calculator </title>
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    
+<div id="wrapper">
+    <body> 
+        <div class="container">
+            <div> 
+                <div class="buttons">
+                    <div id="input" ></div>
+                    <div id="result"></div>
+                    <button class="button" data-key="clear" id="AC">AC</button>
+                    <button class="button" data-key="delete" id="CE">CE</button>
+                    <button class="button" data-key="%" id="%"> % </button>
+                    <button class="button" data-key="/" id="divide"> ÷ </button>
+                    <button class="button" data-key="7" id="7">7</button>
+                    <button class="button" data-key="8" id="8">8</button>
+                    <button class="button" data-key="9" id="9">9</button>
+                    <button class="button" data-key="*" id="multiply">×</button>
+                    <button class="button" data-key="4" id="4">4</button>
+                    <button class="button" data-key="5" id="5">5</button>
+                    <button class="button" data-key="6" id="6">6</button>
+                    <button class="button" data-key="-" id="subtract"> - </button>
+                    <button class="button" data-key="1" id="1">1</button>
+                    <button class="button" data-key="2" id="2">2</button>
+                    <button class="button" data-key="3" id="3">3</button>
+                    <button class="button" data-key="+" id="add"> + </button>
+                    <button class="button" data-key="0" id="0">0</button>
+                    <button class="button" data-key="." id="decimal">.</button>
+                    <button class="button" data-key="=" id="submit">=</button>
+                </div>
+            </div>   
+        </div>
+        <script src="script.js"></script>
+    </body>
+</div>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+
+    *{
+    box-sizing: border-box; 
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    color:black;
+    font-family: 'Courier Prime', 'Times New Roman';
+
+    }
+
+    #wrapper{
+        overflow: hidden;
+        position: relative;
+    }
+
+    .buttons{
+    display: grid; 
+    grid-template-columns: repeat(4,66px);
+    place-items: center;
+    background-color: rgb(255, 234, 213);
+    border: 5px solid black;
+    padding: 15px;
+    padding-top: 20px;
+    border-radius: 12px;
+
+    }
+
+
+    #input{
+        color: black;
+        grid-column: span 4 !important;
+        width: 260px;
+        background-color: rgb(206, 189, 165);
+        text-align: right;
+        padding: 15px;
+        height: 50px;
+        border-radius: 15px;
+        margin-bottom: 0px;
+        font-size: 20px;
+        border-top: 4px solid black;
+        border-left: 4px solid black;
+        border-right: 4px solid black;
+        color: grey;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        overflow:hidden;
+    }
+
+    #result{
+        grid-column: span 4;
+        background-color: rgb(233, 210, 179);
+        height: 50px;
+        width: 260px;
+        margin-bottom: 20px;
+        border-radius: 15px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom: 4px solid black;
+        border-left: 4px solid black;
+        border-right: 4px solid black;
+        text-align: right;
+        padding: 15px;
+        padding-top: 5px;
+        font-size: 35px;
+        overflow:hidden;
+        
+    }
+    
+    .container{
+    display: flex;
+    height: 100vh;
+    border-radius: 25px;
+    justify-content: center;
+    align-items: center;
+
+    }
+
+    button{ 
+        background-color: rgb(255, 255, 254);
+        border-color: transparent;
+        border-radius: 50%;
+        height: 60px;
+        width: 60px;
+        font-size: 23px;
+        border: 3px solid black;
+        margin: 7px;
+        padding:0;
+        font-weight: 500;
+        
+        
+    }
+
+    button:active{
+        background-color: rgb(203, 190, 172);
+    }
+
+    #submit{
+        grid-column: span 2;
+        border-radius: 42px;
+        width: 120px;
+    }
+
+    #divide {
+        background-color: rgb(186, 240, 255);
+    }
+
+        #divide:active{
+            background-color: rgb(78, 217, 255);
+        }
+
+    #multiply{
+        background-color: rgb(186, 208, 255);
+    }
+
+        #multiply:active{
+            background-color: rgb(97, 147, 255);
+        }
+
+    #subtract{
+        background-color: rgb(236, 206, 255);
+    }
+
+        #subtract:active{
+            background-color: rgb(207, 129, 255);
+        }
+
+    #add{
+        background-color: rgb(255, 197, 197);
+    }
+
+        #add:active{
+            background-color: rgb(255, 143, 143);
+        }
+
+    #submit{
+        background-color: rgb(255, 203, 148);
+    }
+
+        #submit:active{
+            background-color: rgb(255, 178, 97);
+        }
+
+</style>
+
+<script> 
+    const buttons = document.querySelectorAll('.button');
+    const input_display = document.getElementById('input');
+    const result_display = document.getElementById('result');
+    let toggle_switch = document.querySelector('#switch');
+    const mode = document.querySelector('#light-mode');
+    const back_mode = document.querySelector('#back-light');
+
+    let input = "";
+    let result= "";
+
+
+    for(let button of buttons){
+        const value = button.dataset.key;
+
+        button.addEventListener('click', ()=> {
+            if (value == "clear"){
+                input_display.innerHTML = "";
+                result_display.innerHTML = "";
+                input = "";
+            }
+            else if(value == "=" ){
+                result = eval(input);
+                result_display.innerHTML = result.toLocaleString("en-US");
+            }
+            else if (value == "delete"){
+                input = input.slice(0, -1);
+                input_display.innerHTML = input;
+            }
+            else{
+                input += value;
+                input_display.innerHTML = input;
+            }
+        })
+    }
+</script>
+
+</html>
